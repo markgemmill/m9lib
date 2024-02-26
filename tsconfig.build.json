@@ -1,0 +1,35 @@
+{
+  "extends": [
+    "@vue/tsconfig/tsconfig.dom.json",
+    "@vue/tsconfig/tsconfig.lib.json"
+],
+  "include": [
+    "env.d.ts", 
+    "src/lib/@types/types.ts", 
+    "src/lib/main.ts", 
+    "src/lib/SpecialSelect.vue"
+],
+  "exclude": [
+    "index.html",
+    "src/App.vue", 
+    "src/main.ts",
+    "src/examples/**/*", 
+    "dist/**/*" 
+],
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "declaration": true,
+    "outDir": "dist",
+    "declarationDir": "dist",
+    "baseUrl": "./src/lib",
+    "paths": {
+        "vue": ["./node_modules/vue", "./node_modules/@vue"]
+    },
+    "composite": true,
+    "types": ["node"],
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+  }
+}
