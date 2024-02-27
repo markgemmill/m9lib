@@ -1,12 +1,12 @@
 // import type { App } from "vue"
-import SpecialSelect from "./SpecialSelect.vue"
+import MgVueSelect from "./MgVueSelect.vue"
 export type { FormatFunction, FilterFunction } from "./@types/types"
 
 
 export default {
     install: (app: any) => {
-        app.component('SpecialSelect', SpecialSelect) 
+        app.component('MgVueSelect', MgVueSelect) 
     }
 }
 
-export { SpecialSelect }
+export { MgVueSelect }

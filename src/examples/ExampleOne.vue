@@ -2,7 +2,7 @@
     <div class="row mt-5">
         <div class="col-8">
             <p>Select from list of object options.</p>
-            <SpecialSelect 
+            <MgVueSelect
                 :id="'exampleOne'"
                 :options="options" 
                 v-model="model" 
@@ -14,7 +14,7 @@
                 :placeholder="'Search Here...'"
                 :row-height="'30px'"
                 :display-line-count="3"
-                ></SpecialSelect>
+                ></MgVueSelect>
         </div>
     </div>
 
@@ -25,8 +25,8 @@
 </template>
 <script setup lang="ts">
 import { ref, watch } from "vue"
-import SpecialSelect from "../lib/SpecialSelect.vue"
-import type { FilterFunction, FormatFunction } from "../lib/types";
+import MgVueSelect from "../lib/MgVueSelect.vue"
+import type { FilterFunction, FormatFunction } from "../lib/@types/types";
 
 type TestModel = {
     name: string

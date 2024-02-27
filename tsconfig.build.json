@@ -7,7 +7,7 @@
     "env.d.ts", 
     "src/lib/@types/types.ts", 
     "src/lib/main.ts", 
-    "src/lib/SpecialSelect.vue"
+    "src/lib/MgVueSelect.vue"
 ],
   "exclude": [
     "index.html",

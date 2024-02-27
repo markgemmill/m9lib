@@ -30,8 +30,8 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/lib/main.ts'),
       formats: ['es'],
-      name: "vue-special-select",
-      fileName: "special-select"
+      name: "mgvlib-vue-select",
+      fileName: "vue-select"
     },
 
     rollupOptions: {
