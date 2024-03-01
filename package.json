@@ -1,19 +1,24 @@
 {
   "name": "mg-vue-select",
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-alpha.2",
+  "author": "Mark Gemmill",
+  "homepage": "https://github.com/markgemmill/vue-select",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/markgemmill/vue-select"
+  },
   "private": false,
   "license": "MIT",
+  "keywords": ["vue", "vue 3", "component", "select"],
   "type": "module",
   "files": [
-    "dist/**/*",
-    "LICENSE",
-    "README.md"
+    "dist"
   ],
-  "types": "./dist/main.d.ts",
-  "module": "./dist/mg-vue-select.es.js",
+  "types": "./dist/index.d.ts",
+  "module": "./dist/index.js",
   "exports": {
     ".": {
-      "import": "./dist/mg-vue-select.es.js"
+      "import": "./dist/index.js"
     }
   },
   "scripts": {

@@ -26,12 +26,13 @@ export default defineConfig({
   },
 
   build: {
-
+    sourcemap: true,
+    minify: false,
     lib: {
-      entry: resolve(__dirname, 'src/lib/main.ts'),
+      entry: resolve(__dirname, 'src/lib/index.ts'),
       formats: ['es'],
       name: "mgvlib-vue-select",
-      fileName: "vue-select"
+      fileName: "index"
     },
 
     rollupOptions: {
@@ -39,8 +40,11 @@ export default defineConfig({
       output: {
         globals: {
           vue: 'Vue'
-        } 
-      }
+        },
+        sourcemapExcludeSources: true 
+
+      },
+      
     }
 
   }
