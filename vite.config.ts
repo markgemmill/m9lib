@@ -4,7 +4,7 @@ import { viteStaticCopy } from 'vite-plugin-static-copy'
 import vue from '@vitejs/plugin-vue'
 import dts from "vite-plugin-dts"
 
-export default defineConfig({
+export default defineConfig(({mode}) => ({
 
   plugins: [
     vue(),
@@ -18,9 +18,10 @@ export default defineConfig({
       ]
     })
   ],
-
+  root: mode === 'development' ? 'playground' : '',
   resolve: {
     alias: {
+      "~": resolve(__dirname),
       "@": resolve(__dirname, "src")
     }
   },
@@ -29,7 +30,7 @@ export default defineConfig({
     sourcemap: true,
     minify: false,
     lib: {
-      entry: resolve(__dirname, 'src/lib/index.ts'),
+      entry: resolve(__dirname, 'src/index.ts'),
       formats: ['es'],
       name: "mgvlib-vue-select",
       fileName: "index"
@@ -49,4 +50,4 @@ export default defineConfig({
 
   }
 
-})
+}))

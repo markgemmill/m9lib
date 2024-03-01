@@ -17,8 +17,8 @@
     </div>
 </template>
 <script setup lang="ts">
-import ExampleOne from "./examples/ExampleOne.vue"
-import ExampleTwo from "./examples/ExampleTwo.vue"
+import ExampleOne from "./ExampleOne.vue"
+import ExampleTwo from "./ExampleTwo.vue"
 
 
 </script>

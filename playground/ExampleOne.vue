@@ -25,8 +25,8 @@
 </template>
 <script setup lang="ts">
 import { ref, watch } from "vue"
-import MgVueSelect from "../lib/MgVueSelect.vue"
-import type { FilterFunction, FormatFunction } from "../lib/@types/types";
+import MgVueSelect from "../src/MgVueSelect.vue"
+import type { FilterFunction, FormatFunction } from "../src/types";
 
 type TestModel = {
     name: string
@@ -74,4 +74,4 @@ watch(model, (newValue) => {
 const onTextChange = (text: string) => {
     inputText.value = text 
 }
-</script>../lib/@types/types
+</script>../lib/@types/types../src/types

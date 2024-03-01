@@ -30,8 +30,8 @@
 </template>
 <script setup lang="ts">
 import { ref, watch } from "vue"
-import MgVueSelect from "../lib/MgVueSelect.vue"
-import type { FilterFunction, FormatFunction } from "../lib/@types/types";
+import MgVueSelect from "../src/MgVueSelect.vue"
+import type { FilterFunction, FormatFunction } from "../src/types";
 
 const keys: string[] = []
 const stringModel = ref("")
@@ -66,4 +66,4 @@ const onStringTextChange = (text: string) => {
     stringInputText.value = text 
 }
 
-</script>
+</script>../src/types

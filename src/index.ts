@@ -1,6 +1,6 @@
 // import type { App } from "vue"
 import MgVueSelect from "./MgVueSelect.vue"
-export type { FormatFunction, FilterFunction } from "./@types/types"
+export type { FormatFunction, FilterFunction } from "./types"
 
 
 export default {
