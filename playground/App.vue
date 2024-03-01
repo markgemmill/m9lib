@@ -10,7 +10,6 @@
             </div>
 
             <ExampleOne></ExampleOne>
-
             <ExampleTwo></ExampleTwo>
 
         </div>
@@ -19,7 +18,5 @@
 <script setup lang="ts">
 import ExampleOne from "./ExampleOne.vue"
 import ExampleTwo from "./ExampleTwo.vue"
-
-
 </script>
-<style scoped></style>@/lib/types
+<style scoped></style>

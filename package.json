@@ -1,6 +1,6 @@
 {
   "name": "mg-vue-select",
-  "version": "0.0.1-alpha.4",
+  "version": "0.0.1-alpha.5",
   "author": "Mark Gemmill",
   "homepage": "https://github.com/markgemmill/vue-select",
   "repository": {
@@ -27,13 +27,11 @@
     "dev": "vite",
     "build": "vue-tsc -p tsconfig.build.json --declaration --emitDeclarationOnly && vite build"
   },
-  "dependencies": {
+  "devDependencies": {
     "@vue/compiler-dom": "^3.4.19",
     "@vue/runtime-dom": "^3.4.19",
     "bootstrap": "^5.3.2",
-    "vue": "^3.4.15"
-  },
-  "devDependencies": {
+    "vue": "^3.4.15",
     "@rushstack/eslint-patch": "^1.3.3",
     "@tsconfig/node20": "^20.1.2",
     "@types/jsdom": "^21.1.6",

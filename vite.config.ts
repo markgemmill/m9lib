@@ -37,10 +37,11 @@ export default defineConfig(({mode}) => ({
     },
 
     rollupOptions: {
-      external: ['vue'],
+      external: ['@vue/runtime-core', 'bootstrap'],
       output: {
         globals: {
-          vue: 'Vue'
+          '@vue/runtime-core': 'VueRuntimeCore',
+          'bootstrap': 'Bootstrap'
         },
         sourcemapExcludeSources: true 
 
