@@ -1,6 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["./*d.ts", "src/**/*", "src/*.ts", "src/*.vue", "playground/*.ts", "playground/*.vue"],
+  "include": ["./*d.ts", "src/**/*", "src/*.ts", "src/*.d.ts", "src/*.vue", "playground/*.ts", "playground/*.vue"],
   "exclude": ["./dist/*"],
   "compilerOptions": {
     "composite": true,

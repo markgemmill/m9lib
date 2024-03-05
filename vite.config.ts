@@ -12,8 +12,8 @@ export default defineConfig(({mode}) => ({
     viteStaticCopy({
       targets: [
         {
-          src: resolve(__dirname, 'src/lib/@types/types.d.ts'),
-          dest: '@types'
+          src: resolve(__dirname, 'src/types.d.ts'),
+          dest: './'
         }
       ]
     })
@@ -29,6 +29,8 @@ export default defineConfig(({mode}) => ({
   build: {
     sourcemap: true,
     minify: false,
+    cssCodeSplit: false,
+    target: "esnext",
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       formats: ['es'],
@@ -37,18 +39,15 @@ export default defineConfig(({mode}) => ({
     },
 
     rollupOptions: {
-      external: ['@vue/runtime-core', 'bootstrap'],
+      external: ['vue', '@vue/runtime-core', 'bootstrap'],
       output: {
         globals: {
+          'vue': 'Vue',
           '@vue/runtime-core': 'VueRuntimeCore',
           'bootstrap': 'Bootstrap'
         },
         sourcemapExcludeSources: true 
-
       },
-      
     }
-
   }
-
 }))

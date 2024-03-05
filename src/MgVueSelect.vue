@@ -36,7 +36,10 @@
 <script setup lang="ts" generic="T">
 import { ref, shallowRef, watch, onMounted, computed, withDefaults, useAttrs } from "vue"
 import type { Ref } from "vue"
-import type { FilterFunction, FormatFunction } from "./@types/types"
+import type { FilterFunction, FormatFunction } from "./types"
+
+// export type FilterFunction<T> = (option: T, text: string) => boolean 
+// export type FormatFunction<T> = (option: T) => string
 
 const component = ref<HTMLDivElement>()
 const searchInput = ref<HTMLInputElement>()
