@@ -2,7 +2,7 @@
     <div class="row mt-5">
         <div class="col-8">
             <p>Select from list of object options.</p>
-            <MgVueSelect
+            <VueSelect
                 :id="'exampleOne'"
                 :options="options" 
                 v-model="model" 
@@ -14,7 +14,7 @@
                 :placeholder="'Search Here...'"
                 :row-height="'30px'"
                 :display-line-count="3"
-                ></MgVueSelect>
+                ></VueSelect>
         </div>
     </div>
 
@@ -25,7 +25,7 @@
 </template>
 <script setup lang="ts">
 import { ref, watch } from "vue"
-import MgVueSelect from "../src/MgVueSelect.vue"
+import VueSelect from "../src/VueSelect.vue"
 import type { FilterFunction, FormatFunction } from "../src/types";
 
 type TestModel = {
@@ -74,4 +74,4 @@ watch(model, (newValue) => {
 const onTextChange = (text: string) => {
     inputText.value = text 
 }
-</script>../lib/@types/types../src/types
+</script>../lib/@types/types../src/types../src/VueSelect.vue

@@ -10,10 +10,14 @@
     "src/*.vue"
 ],
   "exclude": [
+    "node_modules",
     "playground/**/*",
     "dist/**/*" 
 ],
   "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,

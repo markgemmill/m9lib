@@ -34,7 +34,7 @@ export default defineConfig(({mode}) => ({
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       formats: ['es'],
-      name: "mgvlib-vue-select",
+      name: "m9lib",
       fileName: "index"
     },
 

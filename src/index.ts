@@ -1,12 +1,12 @@
 import type { App } from "vue"
-import MgVueSelect from "./MgVueSelect.vue"
+import VueSelect from "./VueSelect.vue"
 export type { FormatFunction, FilterFunction } from "./types"
 
 
 export default {
     install: (app: App) => {
-        app.component('MgVueSelect', MgVueSelect) 
+        app.component('VueSelect', VueSelect) 
     }
 }
 
-export { MgVueSelect }
+export { VueSelect }
