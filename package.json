@@ -1,11 +1,11 @@
 {
   "name": "m9lib",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Mark Gemmill",
-  "homepage": "https://github.com/markgemmill/vue-select",
+  "homepage": "https://github.com/markgemmill/m9lib",
   "repository": {
     "type": "git",
-    "url": "https://github.com/markgemmill/vue-select"
+    "url": "https://github.com/markgemmill/m9lib"
   },
   "private": false,
   "license": "MIT",
