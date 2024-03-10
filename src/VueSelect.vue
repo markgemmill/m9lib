@@ -1,30 +1,44 @@
 <template>
     <div class="special-select" ref="component" :style="cssProperties">
-        <input 
-          type="text" 
-          class="form-control" 
-          ref="searchInput"
-          v-model="searchValue" 
-          :id="componentId"
-          :class="{'is-invalid': props.invalid}"
-          :placeholder="props.placeholder" 
-          :readonly="props.readonly"
-          @focus="onFocus"
-          @blur="onBlur"
-          > 
-        <div :id="validationFeedbackId" class="invalid-feedback">{{ props.errorMsg }}</div>
+        <div style="position:relative;">
+            <input 
+            type="text" 
+            class="form-control" 
+            ref="searchInput"
+            v-model="searchValue" 
+            :id="componentId"
+            :tabindex="tabIndex"
+            :class="{'is-invalid': props.invalid}"
+            :placeholder="props.placeholder" 
+            :readonly="props.readonly"
+            @focus="onFocus"
+            @blur="onBlur"
+            > 
+            <div 
+              style="padding:0;margin:0;position:absolute;right:10px;top:6px;cursor:pointer;z-index:1000;"
+              @click="displayUnfilteredDropdown"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" 
+                    width="16" 
+                    height="16" 
+                    fill="currentColor" 
+                    class="bi bi-caret-down-fill" 
+                    viewBox="0 0 16 16"
+                    >
+                    <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                </svg>
+            </div>
+            <div :id="validationFeedbackId" class="invalid-feedback">{{ props.errorMsg }}</div>
+        </div>
         <div v-if="showDropdownList" class="drop-down">
-            <div class="drop-down-list" tabindex="0">
+            <div class="drop-down-list" tabindex="-1">
                 <div v-for="opt, index in dropdownList" 
-                  class="drop-down-row"
-                  ref="optionElements"
-                  :key="index" 
-                  :class="{'drop-down-selection': isSelected(index)}"
-                  @click="mouseClickFocus(index)"
-                  @dblclick="mouseClickSelect(index)"
-                  :tabindex="index"
-                  > 
-                  <!-- style="scroll-snap-align:start;scroll-snap-stop:always;" -->
+                    class="drop-down-row"
+                    ref="optionElements"
+                    :key="index" 
+                    :class="{'drop-down-selection': isSelected(index)}"
+                    @click="mouseClickSelect(index)"
+                    > 
                     <slot :option="opt">
                         <div class="flex-grow-1" >{{ props.format(opt) }}</div>
                     </slot>
@@ -34,12 +48,9 @@
     </div>
 </template>
 <script setup lang="ts" generic="T">
-import { ref, shallowRef, watch, onMounted, computed, withDefaults, useAttrs } from "vue"
+import { ref, toValue, shallowRef, watch, onMounted, computed, withDefaults, useAttrs, nextTick } from "vue"
 import type { Ref } from "vue"
 import type { FilterFunction, FormatFunction } from "./types"
-
-// export type FilterFunction<T> = (option: T, text: string) => boolean 
-// export type FormatFunction<T> = (option: T) => string
 
 const component = ref<HTMLDivElement>()
 const searchInput = ref<HTMLInputElement>()
@@ -49,6 +60,7 @@ const searchValue = ref("")
 const dropdownList = shallowRef<Array<T>>([]) as Ref<T[]>
 const showDropdownList = ref(false)
 const selectedIndex = ref(0)
+let tabIndex = 0
 
 const attrs = useAttrs()
 
@@ -144,6 +156,45 @@ const onInputChange = (newValue: string) => {
     emit("onTextChange", newValue)
 }
 
+const getDropDownIndex = (list: Array<T>) => {
+    if (modelValue.value === undefined) {
+        return -1
+    }
+    return list.findIndex((option, i) => {
+        return modelValue.value == option
+    })
+}
+
+// Set focus to the element in the dropdown list
+// and scroll the element into view
+const focusOptionElement = (index: number) => {
+    const elements = toValue(optionElements)
+    if (elements) {
+        console.debug(elements)
+        console.debug(`focusing on element: ${index}`)
+        elements[index].focus({preventScroll: false})
+        elements[index].scrollIntoView({block: "center"})
+    }
+}
+
+// Manually trigger the select dropdown.
+// This is useful when the user clicks on the dropdown icon,
+// or when the user presses the down arrow key.
+const displayUnfilteredDropdown = () => {
+    // make sure the input has focus, which
+    // controls the keyboard events
+    searchInput.value?.focus()
+    // unfiltered means the entire list of options
+    dropdownList.value = props.options
+    // toggle the display
+    showDropdownList.value = !showDropdownList.value
+    if (showDropdownList.value === true) {
+        nextTick(() => {
+            selectedIndex.value = getDropDownIndex(dropdownList.value) 
+            focusOptionElement(selectedIndex.value)
+        })
+    }
+}
 
 watch(searchValue, debounceInputValue(onInputChange, 200))
 
@@ -153,7 +204,6 @@ const isSelected = (index: number) => {
     }
     return false
 }
-
 
 const onBlur = () => {
     if (showDropdownList.value === false) {
@@ -184,12 +234,13 @@ const keyDownHandler = (e: KeyboardEvent) => {
 const arrowDownHandler = () => {
     console.debug("Arrow Down keyed...")
     if (showDropdownList.value === false) {
+        displayUnfilteredDropdown()
         return
     }
     const nextIndex = selectedIndex.value + 1
     if (nextIndex + 1 <= dropdownList.value.length) {
         selectedIndex.value = nextIndex
-        if (optionElements.value) optionElements.value[nextIndex].focus()
+        focusOptionElement(nextIndex)
     }
 }
 
@@ -200,7 +251,7 @@ const arrowUpHandler = () => {
     const nextIndex = selectedIndex.value - 1
     if (nextIndex >= 0) {
         selectedIndex.value = nextIndex
-        if (optionElements.value) optionElements.value[nextIndex].focus()
+        focusOptionElement(nextIndex)
     }
 }
 
@@ -252,6 +303,7 @@ defineExpose({
 })
 
 onMounted(() => {
+    tabIndex = attrs.tabindex ? parseInt(attrs.tabindex as string) : 0
     searchValue.value = modelValue.value ? props.format(modelValue.value) : ""
 
     component.value?.addEventListener("keydown", keyDownHandler)
@@ -317,7 +369,8 @@ onMounted(() => {
     width: 100%;
     min-width: 200px;
     /* min-height: calc((var(--row-height) * var(--row-count)) + (2 * 0.5em)); */
-    height: calc((var(--row-height) * var(--row-count)) + (2 * 0.5em));
+    /* height: calc((var(--row-height) * var(--row-count)) + (2 * 0.5em)); */
+    height: calc((var(--row-height) * var(--row-count)));
     /* max-height: calc((var(--row-height) * var(--row-count)) + (2 * 0.5em)); */
     background-color: white !important;
 
@@ -346,5 +399,7 @@ onMounted(() => {
     background-color: #D9D9D9;
     
 }
+.form-control.is-invalid {
+    background-image: none;
+}
 </style>
-./@types/types./types
