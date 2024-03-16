@@ -3,9 +3,14 @@
         <input 
           type="text" 
           class="form-control" 
+          :id="componentId"
+          :tabindex="tabIndex"
+          :class="{'is-invalid': props.invalid}"
           :placeholder="props.placeholder" 
           v-model="inputText"
+          :readonly="props.readOnly"
         />
+        <div :id="validationFeedbackId" class="invalid-feedback">{{ props.errorMsg }}</div>
     </div>
 </template>
 <script setup lang="ts">
@@ -15,9 +20,10 @@ A text input control that can be restricted to:
 - a specific length
 - to capitalized letters
 */
-import { ref, onMounted, withDefaults } from "vue"
+import { ref, computed, useAttrs, onMounted, withDefaults } from "vue"
 
 const component = ref()
+const attrs = useAttrs()
 const inputText = defineModel<string>({required: true,
     set: (value: string) => {
         if (props.capitalize) {
@@ -27,7 +33,10 @@ const inputText = defineModel<string>({required: true,
     }
 })
 const props = withDefaults(defineProps<{
+    invalid?: boolean
+    errorMsg?: string
     placeholder?: string
+    readOnly?: boolean
     maxLength?: number
     capitalize?: boolean
     numbersOnly?: boolean
@@ -35,15 +44,30 @@ const props = withDefaults(defineProps<{
     allowableKeys: string[]
 }>(), {
     placeholder: "",
+    invalid: false,
+    errorMsg: "",
+    readOnly: false,
     maxLength: 0,
     capitalize: false,
     restrictedKeys: false,
     numbersOnly: false,
 })
 
-const movementKeys = ['Backspace', 'Delete', 'ArrowDown', 'ArrowUp', 'Enter', 'Escape', 'ArrowLeft', 'ArrowRight']
+let tabIndex = 0
+
+const movementKeys = ['Backspace', 'Delete', 'Tab', 'ArrowDown', 'ArrowUp', 'Enter', 'Escape', 'ArrowLeft', 'ArrowRight']
+
+const validationFeedbackId = computed(() => {
+    return componentId + "Feedback"
+})
+
+const componentId = computed(() => {
+    return attrs.id ? attrs.id as string : "" 
+})
 
 onMounted(() => {
+    tabIndex = attrs.tabindex ? parseInt(attrs.tabindex as string) : 0
+
     console.debug(props.allowableKeys)
     component.value?.addEventListener("keydown", (e: KeyboardEvent) => {
         console.debug(`keydown: ${e.code}`)

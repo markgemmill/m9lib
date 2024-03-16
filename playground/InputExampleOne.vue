@@ -4,6 +4,8 @@
             <p>VueInput Example</p>
             <VueInput
                 v-model="text"
+                :invalid="exampleTwoInvalid"
+                :error-msg="'Required'"
                 :capitalize="capitalize"
                 :numbers-only="numbersOnly"
                 :max-length="maxLength"
@@ -30,6 +32,10 @@
             <label for="max-length" class="form-check-label">Maximum Length</label>
             <input id="max-length" type="number" class="form-control me-1" v-model="maxLength">
         </div>
+        <div>
+            <input id="toggleError" type="checkbox" class="form-check-input me-1" v-model="exampleTwoInvalid">
+            <label for="toggleError" class="form-check-label">Toggle Error</label>
+        </div>
         <div><strong>INPUT TEXT:</strong> {{ text }}</div> 
         <div><strong>INPUT LENGTH:</strong> {{ text.length }}</div> 
     </div>
@@ -44,5 +50,6 @@ const numbersOnly = ref(false)
 const capitalize = ref(false)
 const maxLength = ref(0)
 const restrictedKeys = ref(false)
+const exampleTwoInvalid = ref(false)
 
 </script>
