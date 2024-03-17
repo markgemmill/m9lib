@@ -14,7 +14,15 @@ export default defineConfig(({mode}) => ({
         {
           src: resolve(__dirname, 'src/types.d.ts'),
           dest: './'
-        }
+        },
+        {
+          src: resolve(__dirname, 'LICENSE'),
+          dest: './'
+        },
+        {
+          src: resolve(__dirname, 'HISTORY.md'),
+          dest: './'
+        },
       ]
     })
   ],

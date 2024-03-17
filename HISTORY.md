@@ -1,5 +1,9 @@
 ### m9lib
 
+#### v0.3.0 (2024-03-17)
+
+* added workable VueTextarea component
+
 
 #### v0.2.1 (2024-03-16)
 
@@ -7,14 +11,14 @@
 
 
 #### v0.2.0 (2024-03-16)
-- workable VueInput component
+* workable VueInput component
 
 
 #### v0.1.0 (2024-03-09)
 
-- workable VueSelect component 
+* workable VueSelect component 
 
 
 #### v0.0.0
 
-- let's make a vue component library!
+* let's make a vue component library!
