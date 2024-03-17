@@ -6,16 +6,14 @@
             class="form-control" 
             ref="searchInput"
             v-model="searchValue" 
-            :id="componentId"
-            :tabindex="tabIndex"
+            v-bind="attrs"
             :class="{'is-invalid': props.invalid}"
-            :placeholder="props.placeholder" 
             :readonly="props.readonly"
             @focus="onFocus"
             @blur="onBlur"
             > 
             <div 
-              style="padding:0;margin:0;position:absolute;right:10px;top:6px;cursor:pointer;z-index:1000;"
+              class="drop-down-icon"
               @click="displayUnfilteredDropdown"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" 
@@ -48,9 +46,13 @@
     </div>
 </template>
 <script setup lang="ts" generic="T">
-import { ref, toValue, shallowRef, watch, onMounted, computed, withDefaults, useAttrs, nextTick } from "vue"
+import { ref, toValue, shallowRef, watch, onMounted, computed, withDefaults, useAttrs, defineOptions, nextTick } from "vue"
 import type { Ref } from "vue"
 import type { FilterFunction, FormatFunction } from "./types"
+
+defineOptions({
+    inheritAttrs: false
+})
 
 const component = ref<HTMLDivElement>()
 const searchInput = ref<HTMLInputElement>()
@@ -60,7 +62,6 @@ const searchValue = ref("")
 const dropdownList = shallowRef<Array<T>>([]) as Ref<T[]>
 const showDropdownList = ref(false)
 const selectedIndex = ref(0)
-let tabIndex = 0
 
 const attrs = useAttrs()
 
@@ -74,7 +75,6 @@ interface SpecialSelectProps<T> {
     options: Array<T> 
     filter: FilterFunction<T>
     format: FormatFunction<T>
-    placeholder: string
     rowHeight: string 
     allowableKeys: Array<string>
     invalid?: boolean
@@ -104,12 +104,9 @@ const cssProperties = computed(() => {
     } 
 })
 
-const componentId = computed(() => {
-    return props.id
-})
 
 const validationFeedbackId = computed(() => {
-    return props.id + "Feedback"
+    return attrs.id + "Feedback"
 })
 
 
@@ -303,7 +300,6 @@ defineExpose({
 })
 
 onMounted(() => {
-    tabIndex = attrs.tabindex ? parseInt(attrs.tabindex as string) : 0
     searchValue.value = modelValue.value ? props.format(modelValue.value) : ""
 
     component.value?.addEventListener("keydown", keyDownHandler)
@@ -401,5 +397,32 @@ onMounted(() => {
 }
 .form-control.is-invalid {
     background-image: none;
+}
+.drop-down-icon {   
+    padding:0;
+    margin:0;
+    position:absolute;
+    right:10px;
+    top:6px;
+    cursor:pointer;
+    z-index:1000;
+}
+.form-control-lg + .drop-down-icon{
+    padding:0;
+    margin:0;
+    position:absolute;
+    right:15px;
+    top:11px;
+    cursor:pointer;
+    z-index:1000;
+}
+.form-control-sm + .drop-down-icon{
+    padding:0;
+    margin:0;
+    position:absolute;
+    right:10px;
+    top:3px;
+    cursor:pointer;
+    z-index:1000;
 }
 </style>

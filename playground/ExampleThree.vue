@@ -3,7 +3,9 @@
         <div class="col-8">
             <p>Restrict input to numbers. </p>
             <VueSelect 
-                :id="'exampleThree'"
+                id="'exampleThree'"
+                class="form-control form-control-sm"
+                placeholder="Enter text here..."
                 :options="options" 
                 v-model="model" 
                 @on-text-change="onStringTextChange"
@@ -12,7 +14,6 @@
                 :allowable-keys="keys"
                 :invalid="exampleTwoInvalid"
                 :error-msg="'Required'"
-                :placeholder="'Search Here...'"
                 :row-height="'30px'"
                 :display-line-count="3"
                 ></VueSelect>
@@ -29,7 +30,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref, watch } from "vue"
+import { ref } from "vue"
 import VueSelect from "../src/VueSelect.vue"
 import type { FilterFunction, FormatFunction } from "../src/types";
 

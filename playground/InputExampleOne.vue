@@ -3,6 +3,10 @@
         <div class="col-8">
             <p>VueInput Example</p>
             <VueInput
+                id="input-example-one"
+                tabindex="5"
+                placeholder="Enter text here..."
+                class="form-control form-control-sm"
                 v-model="text"
                 :invalid="exampleTwoInvalid"
                 :error-msg="'Required'"

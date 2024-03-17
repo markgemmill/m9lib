@@ -3,7 +3,9 @@
         <div class="col-8">
             <p>Select from list of object options.</p>
             <VueSelect
-                :id="'exampleOne'"
+                id="'exampleOne'"
+                placeholder="'Search Here...'"
+                class="form-control form-control-lg"
                 :options="options" 
                 v-model="model" 
                 @on-text-change="onTextChange"
@@ -11,7 +13,6 @@
                 :format="modelFormat" 
                 :allowable-keys="keys"
                 :is-valid="false"
-                :placeholder="'Search Here...'"
                 :row-height="'30px'"
                 :display-line-count="3"
                 ></VueSelect>

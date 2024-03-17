@@ -3,11 +3,9 @@
         <input 
           type="text" 
           class="form-control" 
-          :id="componentId"
-          :tabindex="tabIndex"
-          :class="{'is-invalid': props.invalid}"
-          :placeholder="props.placeholder" 
+          v-bind="attrs"
           v-model="inputText"
+          :class="{'is-invalid': props.invalid}"
           :readonly="props.readOnly"
         />
         <div :id="validationFeedbackId" class="invalid-feedback">{{ props.errorMsg }}</div>
@@ -20,7 +18,11 @@ A text input control that can be restricted to:
 - a specific length
 - to capitalized letters
 */
-import { ref, computed, useAttrs, onMounted, withDefaults } from "vue"
+import { ref, computed, useAttrs, defineOptions, onMounted, withDefaults } from "vue"
+
+defineOptions({
+    inheritAttrs: false
+})
 
 const component = ref()
 const attrs = useAttrs()
@@ -35,7 +37,6 @@ const inputText = defineModel<string>({required: true,
 const props = withDefaults(defineProps<{
     invalid?: boolean
     errorMsg?: string
-    placeholder?: string
     readOnly?: boolean
     maxLength?: number
     capitalize?: boolean
@@ -43,7 +44,6 @@ const props = withDefaults(defineProps<{
     restrictedKeys?: boolean 
     allowableKeys: string[]
 }>(), {
-    placeholder: "",
     invalid: false,
     errorMsg: "",
     readOnly: false,
@@ -53,20 +53,15 @@ const props = withDefaults(defineProps<{
     numbersOnly: false,
 })
 
-let tabIndex = 0
-
 const movementKeys = ['Backspace', 'Delete', 'Tab', 'ArrowDown', 'ArrowUp', 'Enter', 'Escape', 'ArrowLeft', 'ArrowRight']
 
 const validationFeedbackId = computed(() => {
-    return componentId + "Feedback"
+    return attrs.id + "Feedback"
 })
 
-const componentId = computed(() => {
-    return attrs.id ? attrs.id as string : "" 
-})
 
 onMounted(() => {
-    tabIndex = attrs.tabindex ? parseInt(attrs.tabindex as string) : 0
+    // tabIndex = attrs.tabindex ? parseInt(attrs.tabindex as string) : 0
 
     console.debug(props.allowableKeys)
     component.value?.addEventListener("keydown", (e: KeyboardEvent) => {
