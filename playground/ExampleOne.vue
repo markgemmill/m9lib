@@ -4,7 +4,7 @@
             <p>Select from list of object options.</p>
             <VueSelect
                 id="'exampleOne'"
-                placeholder="'Search Here...'"
+                placeholder="Search Here..."
                 class="form-control form-control-lg"
                 :options="options" 
                 v-model="model" 
@@ -59,7 +59,7 @@ const inputText = ref("")
 const keys: string[] = []
 
 const modelFilter: FilterFunction<TestModel> = (option: TestModel, text: string): boolean => {
-    return option.name.includes(text) || option.key.includes(text) 
+    return option.name.indexOf(text) >= 0 || option.key.indexOf(text) >= 0 
 }
 
 const modelFormat: FormatFunction<TestModel> = (option: TestModel): string => {
@@ -75,4 +75,4 @@ watch(model, (newValue) => {
 const onTextChange = (text: string) => {
     inputText.value = text 
 }
-</script>../lib/@types/types../src/types../src/VueSelect.vue
+</script>

@@ -28,15 +28,20 @@
             </div>
             <div :id="validationFeedbackId" class="invalid-feedback">{{ props.errorMsg }}</div>
         </div>
-        <div v-if="showDropdownList" class="drop-down">
-            <div class="drop-down-list" tabindex="-1">
+        <div v-if="showDropdownList" 
+          class="drop-down"
+          :class="dropDownClasses"
+          @mouseenter="dropDownElementHasMountFocus = true"
+          @mouseleave="dropDownElementHasMountFocus = false"
+          >
+            <div ref="dropDownElement" class="drop-down-list" tabindex="-1">
                 <div v-for="opt, index in dropdownList" 
                     class="drop-down-row"
                     ref="optionElements"
                     :key="index" 
                     :class="{'drop-down-selection': isSelected(index)}"
                     @click="mouseClickSelect(index)"
-                    > 
+                    >
                     <slot :option="opt">
                         <div class="flex-grow-1" >{{ props.format(opt) }}</div>
                     </slot>
@@ -60,6 +65,8 @@ const optionElements = ref<HTMLDialogElement[]>()
 
 const searchValue = ref("")
 const dropdownList = shallowRef<Array<T>>([]) as Ref<T[]>
+const dropDownClasses = ref({})
+const dropDownElementHasMountFocus = ref(false)
 const showDropdownList = ref(false)
 const selectedIndex = ref(0)
 
@@ -166,7 +173,7 @@ const getDropDownIndex = (list: Array<T>) => {
 // and scroll the element into view
 const focusOptionElement = (index: number) => {
     const elements = toValue(optionElements)
-    if (elements) {
+    if (elements && index >= 0 && index < elements.length) {
         console.debug(elements)
         console.debug(`focusing on element: ${index}`)
         elements[index].focus({preventScroll: false})
@@ -203,8 +210,13 @@ const isSelected = (index: number) => {
 }
 
 const onBlur = () => {
+    if (dropDownElementHasMountFocus.value === true) {
+        return
+    }
     if (showDropdownList.value === false) {
         emit('blur') 
+    } else {
+        showDropdownList.value = false
     }
 }
 
@@ -266,14 +278,12 @@ const escapeHandler = () => {
     showDropdownList.value = false
 }
 
-
-const mouseClickFocus = (index: number) => {
-    selectedIndex.value = index 
-}
-
 const mouseClickSelect = (index: number) => {
     selectedIndex.value = index 
+    console.debug(`mouse click: ${index}`)
+    console.debug(`mouse click: ${selectedIndex.value}`)
     setSelectedOption(selectedIndex.value)
+    showDropdownList.value = false
 }
 
 //
@@ -298,6 +308,15 @@ const reset = () => {
 defineExpose({
     reset
 })
+
+const setDropDownClass = () => {
+    const classes = attrs.class as string
+    if (classes && classes.indexOf("form-control-lg") > -1 ) {
+        dropDownClasses.value = {"drop-down-lg": true}
+    } else if (classes && classes.indexOf("form-control-sm") > -1 ) {
+        dropDownClasses.value = {"drop-down-sm": true}
+    }
+}
 
 onMounted(() => {
     searchValue.value = modelValue.value ? props.format(modelValue.value) : ""
@@ -335,6 +354,8 @@ onMounted(() => {
             e.preventDefault() 
         }
     })
+
+    setDropDownClass()
 })
 
 </script>
@@ -416,7 +437,7 @@ onMounted(() => {
     cursor:pointer;
     z-index:1000;
 }
-.form-control-sm + .drop-down-icon{
+.form-control-sm + .drop-down-icon {
     padding:0;
     margin:0;
     position:absolute;
@@ -424,5 +445,13 @@ onMounted(() => {
     top:3px;
     cursor:pointer;
     z-index:1000;
+}
+
+.drop-down-lg {
+    top: 48px;
+}
+
+.drop-down-sm {
+    top: 33px;
 }
 </style>

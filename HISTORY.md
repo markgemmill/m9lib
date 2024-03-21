@@ -1,5 +1,10 @@
 ### m9lib
 
+#### v0.3.1 (2024-03-20)
+* fixed issue with dropdown not closing when control is blurred.
+* fixed dropdown positioning when class is lg or sm.
+* removing console calls from build.
+  
 #### v0.3.0 (2024-03-17)
 
 * added workable VueTextarea component
