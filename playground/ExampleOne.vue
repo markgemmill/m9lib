@@ -15,6 +15,7 @@
                 :is-valid="false"
                 :row-height="'30px'"
                 :display-line-count="3"
+                @blur="() => console.debug('blur event...')"
                 ></VueSelect>
         </div>
     </div>

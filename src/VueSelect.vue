@@ -229,6 +229,7 @@ const setSelectedOption = (index: number) => {
     modelValue.value = dropdownList.value[index] 
     selectionStarted = true
     showDropdownList.value = false
+    dropDownElementHasMountFocus.value = false
 }
 
 // Keyboard Event Handlers
