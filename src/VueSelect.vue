@@ -8,7 +8,7 @@
             v-model="searchValue" 
             v-bind="attrs"
             :class="{'is-invalid': props.invalid}"
-            :readonly="props.readonly"
+            :disabled="props.readonly"
             @focus="onFocus"
             @blur="onBlur"
             > 
@@ -28,7 +28,7 @@
             </div>
             <div :id="validationFeedbackId" class="invalid-feedback">{{ props.errorMsg }}</div>
         </div>
-        <div v-if="showDropdownList" 
+        <div v-if="displayDropdownList" 
           class="drop-down"
           :class="dropDownClasses"
           @mouseenter="dropDownElementHasMountFocus = true"
@@ -116,6 +116,10 @@ const validationFeedbackId = computed(() => {
     return attrs.id + "Feedback"
 })
 
+const displayDropdownList = computed(() => {
+    return showDropdownList.value && props.readonly === false 
+})
+
 
 const debounceInputValue = (cb: (nv: string) => void, delay: number) => {
    let timeoutInstance: number | undefined = undefined 
@@ -185,6 +189,9 @@ const focusOptionElement = (index: number) => {
 // This is useful when the user clicks on the dropdown icon,
 // or when the user presses the down arrow key.
 const displayUnfilteredDropdown = () => {
+    if (props.readonly === true) {
+        return
+    }
     // make sure the input has focus, which
     // controls the keyboard events
     searchInput.value?.focus()
@@ -242,6 +249,9 @@ const keyDownHandler = (e: KeyboardEvent) => {
 }
 
 const arrowDownHandler = () => {
+    if (props.readonly === true) {
+        return
+    }
     console.debug("Arrow Down keyed...")
     if (showDropdownList.value === false) {
         displayUnfilteredDropdown()
@@ -255,6 +265,9 @@ const arrowDownHandler = () => {
 }
 
 const arrowUpHandler = () => {
+    if (props.readonly === true) {
+        return
+    }
     if (showDropdownList.value === false) {
         return
     }

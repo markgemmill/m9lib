@@ -1,5 +1,9 @@
 ### m9lib
 
+#### v0.3.3 (2023-04-15)
+* fixed readonly option on VueSelect
+
+
 #### v0.3.2 (2024-03-22)
 * fixed bug in VueSelect blur event
 

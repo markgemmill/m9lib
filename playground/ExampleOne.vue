@@ -15,12 +15,17 @@
                 :is-valid="false"
                 :row-height="'30px'"
                 :display-line-count="3"
+                :readonly="exampleOneReadOnly"
                 @blur="() => console.debug('blur event...')"
                 ></VueSelect>
         </div>
     </div>
 
     <div class="row mt-2 ps-2">
+        <div>
+            <input id="toggleReadonly" type="checkbox" class="form-check-input me-1" v-model="exampleOneReadOnly">
+            <label for="toggleReadonly" class="form-check-label">Toggle Readonly</label>
+        </div>
         <div><strong>INPUT TEXT:</strong> {{ inputText }}</div> 
         <div><strong>SELECTED MODEL:</strong> {{ model }}</div> 
     </div>
@@ -34,6 +39,8 @@ type TestModel = {
     name: string
     key: string
 }
+
+const exampleOneReadOnly = ref(false)
 
 const options = ref<TestModel[]>([
     { key: "ABC", name: "The Kids"},
